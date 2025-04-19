@@ -1,7 +1,13 @@
 // src/context/BudgetContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Transaction = { id: string; amount: number; type: 'spend' | 'save'; date: Date };
+export type Transaction = {
+  id: string
+  amount: number
+  type: 'spend' | 'save'
+  date: Date
+  comment?: string    // ← new optional field
+}
 
 type BudgetContextType = {
   payday: string;

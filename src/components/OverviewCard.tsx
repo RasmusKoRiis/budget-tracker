@@ -14,20 +14,20 @@ export default function OverviewCard() {
     .filter((t) => t.type === 'save')
     .reduce((sum, t) => sum + t.amount, 0);
 
+  // Calculate how much was spent today
+  const todayString = new Date().toDateString();
+  const usedToday = transactions
+    .filter((t) => t.type === 'spend' && new Date(t.date).toDateString() === todayString)
+    .reduce((sum, t) => sum + t.amount, 0);
+
   const currentRemaining = Math.max(0, remaining - spent - saved);
-  const dailyAllowance = daysLeft > 0
-    ? Math.max(0, currentRemaining / daysLeft)
-    : 0;
-  const potentialSavings = Math.max(
-    0,
-    currentRemaining - dailyAllowance * daysLeft
-  );
+  const dailyAllowance = daysLeft > 0 ? Math.max(0, currentRemaining / daysLeft) : 0;
   const actualSavings = saved;
 
   const cards = [
     { title: 'Remaining', value: `${currentRemaining.toFixed(0)} NOK` },
     { title: 'Daily Allowance', value: `${dailyAllowance.toFixed(0)} NOK` },
-    { title: 'Potential Savings', value: `${potentialSavings.toFixed(0)} NOK` },
+    { title: 'Used Today', value: `${usedToday.toFixed(0)} NOK` },
     { title: 'Actual Savings', value: `${actualSavings.toFixed(0)} NOK` },
     { title: 'Days Left', value: `${daysLeft}` },
   ];
